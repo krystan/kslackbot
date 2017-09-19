@@ -5,9 +5,9 @@
     "fmt"
     "log"
     "strings"
-    "github.com/google/go-github/github"
-
     "context"
+    
+    "github.com/google/go-github/github"
   )
 
   func main() {
