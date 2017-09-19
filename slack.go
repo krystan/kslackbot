@@ -36,7 +36,7 @@ func slackStart(token string) (wsurl, id string, err error) {
   }
 
   body, err := ioutil.ReadAll(resp.Body)
-  resp.Body.Close()
+  defer resp.Body.Close()
 
   if err != nil {
     return
