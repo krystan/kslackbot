@@ -6,7 +6,7 @@
     "log"
     "strings"
     "context"
-    
+
     "github.com/google/go-github/github"
   )
 
@@ -36,9 +36,12 @@
       if m.Type == "message" && strings.HasPrefix(m.Text, "<@"+id+">") {
         parts := strings.Fields(m.Text)
 
-        if len(parts) == 3 && parts[1] == "commit" {
+        if (len(parts) != 4) {
+          m.Text = "usage - <owner> <repo>"
+          sendMessage(ws, m)
+        } else if parts[1] == "commit" {
           go func(m SlackMessage) {
-            commit,err := getLastCommit("krystan", parts[2],  gitClient)
+            commit, err := getLastCommit(parts[2], parts[3], gitClient)
 
             if err != nil {
               log.Fatal("fatal error getting commit:%v", err)
